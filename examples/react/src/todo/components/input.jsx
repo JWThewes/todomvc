@@ -1,5 +1,5 @@
 import { useCallback, useState } from "react";
-import Input from "@cloudscape-design/components/input";
+import CloudscapeInput from "@cloudscape-design/components/input";
 
 const sanitize = (string) => {
     const map = {
@@ -18,13 +18,20 @@ const hasValidMin = (value, min) => {
     return value.length >= min;
 };
 
-export function InputComponent({ onSubmit, placeholder, label, defaultValue, onBlur }) {
+export function Input({ onSubmit, placeholder, label, defaultValue, onBlur }) {
     const [value, setValue] = useState(defaultValue || "");
 
     const handleBlur = useCallback(() => {
         if (onBlur)
             onBlur();
     }, [onBlur]);
+
+    const handleChange = useCallback(
+        (e) => {
+            setValue(e.detail.value);
+        },
+        []
+    );
 
     const handleKeyDown = useCallback(
         (e) => {
@@ -38,18 +45,18 @@ export function InputComponent({ onSubmit, placeholder, label, defaultValue, onB
                 setValue("");
             }
         },
-        [onSubmit, value]
+        [value, onSubmit]
     );
 
     return (
-        <Input
+        <CloudscapeInput
             value={value}
-            onChange={({ detail }) => setValue(detail.value)}
+            onChange={handleChange}
             onKeyDown={handleKeyDown}
+            onBlur={handleBlur}
             placeholder={placeholder}
             ariaLabel={label}
-            onBlur={handleBlur}
-            autoFocus
+            data-testid="text-input"
         />
     );
 }

@@ -1,4 +1,5 @@
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
+import Input from "@cloudscape-design/components/input";
 
 const sanitize = (string) => {
     const map = {
@@ -17,7 +18,9 @@ const hasValidMin = (value, min) => {
     return value.length >= min;
 };
 
-export function Input({ onSubmit, placeholder, label, defaultValue, onBlur }) {
+export function InputComponent({ onSubmit, placeholder, label, defaultValue, onBlur }) {
+    const [value, setValue] = useState(defaultValue || "");
+
     const handleBlur = useCallback(() => {
         if (onBlur)
             onBlur();
@@ -25,25 +28,28 @@ export function Input({ onSubmit, placeholder, label, defaultValue, onBlur }) {
 
     const handleKeyDown = useCallback(
         (e) => {
-            if (e.key === "Enter") {
-                const value = e.target.value.trim();
+            if (e.detail.key === "Enter") {
+                const trimmedValue = value.trim();
 
-                if (!hasValidMin(value, 2))
+                if (!hasValidMin(trimmedValue, 2))
                     return;
 
-                onSubmit(sanitize(value));
-                e.target.value = "";
+                onSubmit(sanitize(trimmedValue));
+                setValue("");
             }
         },
-        [onSubmit]
+        [onSubmit, value]
     );
 
     return (
-        <div className="input-container">
-            <input className="new-todo" id="todo-input" type="text" data-testid="text-input" autoFocus placeholder={placeholder} defaultValue={defaultValue} onBlur={handleBlur} onKeyDown={handleKeyDown} />
-            <label className="visually-hidden" htmlFor="todo-input">
-                {label}
-            </label>
-        </div>
+        <Input
+            value={value}
+            onChange={({ detail }) => setValue(detail.value)}
+            onKeyDown={handleKeyDown}
+            placeholder={placeholder}
+            ariaLabel={label}
+            onBlur={handleBlur}
+            autoFocus
+        />
     );
 }

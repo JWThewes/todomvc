@@ -1,8 +1,7 @@
 import { useMemo, useCallback } from "react";
 import { useLocation } from "react-router-dom";
-
+import Container from "@cloudscape-design/components/container";
 import { Item } from "./item";
-import classnames from "classnames";
 
 import { TOGGLE_ALL } from "../constants";
 
@@ -25,21 +24,23 @@ export function Main({ todos, dispatch }) {
 
     const toggleAll = useCallback((e) => dispatch({ type: TOGGLE_ALL, payload: { completed: e.target.checked } }), [dispatch]);
 
+    const allCompleted = visibleTodos.length > 0 && visibleTodos.every((todo) => todo.completed);
+
     return (
-        <main className="main" data-testid="main">
-            {visibleTodos.length > 0 ? (
+        <Container>
+            {visibleTodos.length > 0 && (
                 <div className="toggle-all-container">
-                    <input className="toggle-all" type="checkbox" id="toggle-all" data-testid="toggle-all" checked={visibleTodos.every((todo) => todo.completed)} onChange={toggleAll} />
+                    <input className="toggle-all" type="checkbox" id="toggle-all" data-testid="toggle-all" checked={allCompleted} onChange={toggleAll} />
                     <label className="toggle-all-label" htmlFor="toggle-all">
                         Toggle All Input
                     </label>
                 </div>
-            ) : null}
-            <ul className={classnames("todo-list")} data-testid="todo-list">
+            )}
+            <ul className="todo-list" data-testid="todo-list">
                 {visibleTodos.map((todo, index) => (
                     <Item todo={todo} key={todo.id} dispatch={dispatch} index={index} />
                 ))}
             </ul>
-        </main>
+        </Container>
     );
 }

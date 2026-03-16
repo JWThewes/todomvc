@@ -1,5 +1,6 @@
 import { useCallback } from "react";
 import CloudscapeHeader from "@cloudscape-design/components/header";
+import Button from "@cloudscape-design/components/button";
 import { Input } from "./input";
 import { useTheme } from "../theme-context";
 
@@ -12,9 +13,7 @@ export function Header({ dispatch }) {
     return (
         <CloudscapeHeader variant="h1" actions={<Input onSubmit={addItem} label="New Todo Input" placeholder="What needs to be done?" />}>
             todos
-            <button className="theme-toggle" onClick={toggleTheme} aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}>
-                {theme === 'light' ? '🌙' : '☀️'}
-            </button>
+            <Button variant="icon" iconName={theme === 'light' ? 'dark-mode' : 'light-mode'} onClick={toggleTheme} aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`} />
         </CloudscapeHeader>
     );
 }

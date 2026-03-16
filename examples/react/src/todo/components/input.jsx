@@ -1,4 +1,5 @@
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
+import CloudscapeInput from "@cloudscape-design/components/input";
 
 const sanitize = (string) => {
     const map = {
@@ -18,32 +19,44 @@ const hasValidMin = (value, min) => {
 };
 
 export function Input({ onSubmit, placeholder, label, defaultValue, onBlur }) {
+    const [value, setValue] = useState(defaultValue || "");
+
     const handleBlur = useCallback(() => {
         if (onBlur)
             onBlur();
     }, [onBlur]);
 
+    const handleChange = useCallback(
+        (e) => {
+            setValue(e.detail.value);
+        },
+        []
+    );
+
     const handleKeyDown = useCallback(
         (e) => {
-            if (e.key === "Enter") {
-                const value = e.target.value.trim();
+            if (e.detail.key === "Enter") {
+                const trimmedValue = value.trim();
 
-                if (!hasValidMin(value, 2))
+                if (!hasValidMin(trimmedValue, 2))
                     return;
 
-                onSubmit(sanitize(value));
-                e.target.value = "";
+                onSubmit(sanitize(trimmedValue));
+                setValue("");
             }
         },
-        [onSubmit]
+        [value, onSubmit]
     );
 
     return (
-        <div className="input-container">
-            <input className="new-todo" id="todo-input" type="text" data-testid="text-input" autoFocus placeholder={placeholder} defaultValue={defaultValue} onBlur={handleBlur} onKeyDown={handleKeyDown} />
-            <label className="visually-hidden" htmlFor="todo-input">
-                {label}
-            </label>
-        </div>
+        <CloudscapeInput
+            value={value}
+            onChange={handleChange}
+            onKeyDown={handleKeyDown}
+            onBlur={handleBlur}
+            placeholder={placeholder}
+            ariaLabel={label}
+            data-testid="text-input"
+        />
     );
 }

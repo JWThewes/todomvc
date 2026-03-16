@@ -1,5 +1,6 @@
 import { memo, useState, useCallback } from "react";
-import classnames from "classnames";
+import Checkbox from "@cloudscape-design/components/checkbox";
+import Button from "@cloudscape-design/components/button";
 
 import { Input } from "./input";
 
@@ -9,7 +10,7 @@ export const Item = memo(function Item({ todo, dispatch, index }) {
     const [isWritable, setIsWritable] = useState(false);
     const { title, completed, id } = todo;
 
-    const toggleItem = useCallback(() => dispatch({ type: TOGGLE_ITEM, payload: { id } }), [dispatch]);
+    const toggleItem = useCallback((e) => dispatch({ type: TOGGLE_ITEM, payload: { id } }), [dispatch]);
     const removeItem = useCallback(() => dispatch({ type: REMOVE_ITEM, payload: { id } }), [dispatch]);
     const updateItem = useCallback((id, title) => dispatch({ type: UPDATE_ITEM, payload: { id, title } }), [dispatch]);
 
@@ -34,17 +35,17 @@ export const Item = memo(function Item({ todo, dispatch, index }) {
     );
 
     return (
-        <li className={classnames({ completed: todo.completed })} data-testid="todo-item">
+        <li className={completed ? "completed" : ""} data-testid="todo-item">
             <div className="view">
                 {isWritable ? (
                     <Input onSubmit={handleUpdate} label="Edit Todo Input" defaultValue={title} onBlur={handleBlur} />
                 ) : (
                     <>
-                        <input className="toggle" type="checkbox" data-testid="todo-item-toggle" checked={completed} onChange={toggleItem} />
-                        <label data-testid="todo-item-label" onDoubleClick={handleDoubleClick}>
+                        <Checkbox checked={completed} onChange={toggleItem} data-testid="todo-item-toggle" />
+                        <span data-testid="todo-item-label" onDoubleClick={handleDoubleClick} style={{ cursor: "pointer" }}>
                             {title}
-                        </label>
-                        <button className="destroy" data-testid="todo-item-button" onClick={removeItem} />
+                        </span>
+                        <Button iconName="close" variant="icon" onClick={removeItem} data-testid="todo-item-button" />
                     </>
                 )}
             </div>

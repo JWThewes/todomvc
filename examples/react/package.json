@@ -32,6 +32,8 @@
         "webpack-merge": "^5.8.0"
     },
     "dependencies": {
+        "@cloudscape-design/components": "^3.0.0",
+        "@cloudscape-design/global-styles": "^1.0.0",
         "classnames": "^2.2.5",
         "react": "^17.0.2",
         "react-dom": "^17.0.2",

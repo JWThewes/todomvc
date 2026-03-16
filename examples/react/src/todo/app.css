@@ -22,3 +22,79 @@ but useful for people who use screen readers */
 .toggle-all-label {
     pointer-events: none;
 }
+
+/* Cloudscape Theme Support */
+:root,
+.theme-light {
+    --color-background-layer-1: #ffffff;
+    --color-background-layer-2: #f2f3f3;
+    --color-background-layer-3: #e8ebeb;
+    --color-text-primary: #0f1419;
+    --color-text-secondary: #565e6c;
+    --color-text-disabled: #8b939e;
+    --color-border-control-default: #8b939e;
+    --color-border-divider-default: #d1d5db;
+    --color-background-input-default: #ffffff;
+    --color-background-input-disabled: #f2f3f3;
+    --color-background-button-primary-default: #0974d7;
+    --color-background-button-primary-hover: #0a5bc4;
+    --color-background-button-primary-active: #094a8f;
+    --color-background-button-secondary-default: #e8ebeb;
+    --color-background-button-secondary-hover: #d1d5db;
+    --color-background-button-secondary-active: #b8bebc;
+    --color-background-button-primary-disabled: #e8ebeb;
+    --color-background-button-primary-text-disabled: #8b939e;
+    --color-background-overlay: rgba(0, 0, 0, 0.32);
+    --color-background-popover: #ffffff;
+    --color-background-dropdown: #ffffff;
+    --color-background-tight: transparent;
+}
+
+.theme-dark {
+    --color-background-layer-1: #1f2937;
+    --color-background-layer-2: #111827;
+    --color-background-layer-3: #0f1419;
+    --color-text-primary: #f3f4f6;
+    --color-text-secondary: #9ca3af;
+    --color-text-disabled: #6b7280;
+    --color-border-control-default: #6b7280;
+    --color-border-divider-default: #374151;
+    --color-background-input-default: #1f2937;
+    --color-background-input-disabled: #111827;
+    --color-background-button-primary-default: #3b82f6;
+    --color-background-button-primary-hover: #2563eb;
+    --color-background-button-primary-active: #1d4ed8;
+    --color-background-button-secondary-default: #374151;
+    --color-background-button-secondary-hover: #4b5563;
+    --color-background-button-secondary-active: #6b7280;
+    --color-background-button-primary-disabled: #374151;
+    --color-background-button-primary-text-disabled: #6b7280;
+    --color-background-overlay: rgba(0, 0, 0, 0.64);
+    --color-background-popover: #1f2937;
+    --color-background-dropdown: #1f2937;
+    --color-background-tight: transparent;
+}
+
+/* Theme-aware component styles */
+body {
+    background-color: var(--color-background-layer-1);
+    color: var(--color-text-primary);
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.theme-toggle {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: var(--color-background-button-secondary-default);
+    border: 1px solid var(--color-border-control-default);
+    border-radius: 4px;
+    padding: 8px 12px;
+    cursor: pointer;
+    font-size: 18px;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.theme-toggle:hover {
+    background: var(--color-background-button-secondary-hover);
+}

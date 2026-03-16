@@ -1,5 +1,5 @@
 import { useReducer } from "react";
-import { Header } from "./components/header";
+import { HeaderComponent } from "./components/header";
 import { Main } from "./components/main";
 import { Footer } from "./components/footer";
 
@@ -12,7 +12,7 @@ export function App() {
 
     return (
         <>
-            <Header dispatch={dispatch} />
+            <HeaderComponent dispatch={dispatch} />
             <Main todos={todos} dispatch={dispatch} />
             <Footer todos={todos} dispatch={dispatch} />
         </>

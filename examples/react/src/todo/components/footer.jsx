@@ -1,5 +1,8 @@
 import { useCallback, useMemo } from "react";
 import { useLocation } from "react-router-dom";
+import SpaceBetween from "@cloudscape-design/components/space-between";
+import Button from "@cloudscape-design/components/button";
+import Link from "@cloudscape-design/components/link";
 import classnames from "classnames";
 
 import { REMOVE_COMPLETED_ITEMS } from "../constants";
@@ -18,26 +21,14 @@ export function Footer({ todos, dispatch }) {
     return (
         <footer className="footer" data-testid="footer">
             <span className="todo-count">{`${activeTodos.length} ${activeTodos.length === 1 ? "item" : "items"} left!`}</span>
-            <ul className="filters" data-testid="footer-navigation">
-                <li>
-                    <a className={classnames({ selected: route === "/" })} href="#/">
-                        All
-                    </a>
-                </li>
-                <li>
-                    <a className={classnames({ selected: route === "/active" })} href="#/active">
-                        Active
-                    </a>
-                </li>
-                <li>
-                    <a className={classnames({ selected: route === "/completed" })} href="#/completed">
-                        Completed
-                    </a>
-                </li>
-            </ul>
-            <button className="clear-completed" disabled={activeTodos.length === todos.length} onClick={removeCompleted}>
+            <SpaceBetween direction="horizontal" size="m">
+                <Link href="#/" className={classnames({ selected: route === "/" })}>All</Link>
+                <Link href="#/active" className={classnames({ selected: route === "/active" })}>Active</Link>
+                <Link href="#/completed" className={classnames({ selected: route === "/completed" })}>Completed</Link>
+            </SpaceBetween>
+            <Button onClick={removeCompleted} disabled={activeTodos.length === todos.length}>
                 Clear completed
-            </button>
+            </Button>
         </footer>
     );
 }
